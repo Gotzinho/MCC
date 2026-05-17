@@ -1,0 +1,19 @@
+{
+  "name": "MCC 2026 - Training",
+  "short_name": "MCC 2026",
+  "description": "Application de suivi d'entraînement et charge TRIMP pour la préparation MCC.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f0f4f8",
+  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/857/857684.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+
