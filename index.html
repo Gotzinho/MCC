@@ -31,4 +31,954 @@ body{background:var(--bg);color:var(--text);font-family:'Inconsolata',monospace;
 #app-header{background:var(--text);color:#fff;padding:calc(var(--safe-top) + 10px) 16px 10px;flex-shrink:0;border-bottom:2px solid var(--accent);position:relative;z-index:20}
 #app-content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--safe-bottom) + 70px)}
 #app-nav{position:fixed;bottom:0;left:0;right:0;background:var(--text);border-top:1px solid #1e293b;padding:6px 0 calc(var(--safe-bottom) + 6px);display:flex;justify-content:space-around;z-index:20}
-.nav
+.nav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 12px;border:none;background:none;color:#64748b;font-family:'Inconsolata',monospace;font-size:9px;letter-spacing:1px;cursor:pointer;transition:color .2s;min-width:52px}
+.nav-btn.on{color:var(--accent2)}.nav-btn .nav-icon{font-size:20px;line-height:1}
+
+/* HEADER */
+.hdr-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.hdr-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;letter-spacing:1px;color:#fff}
+.hdr-sub{font-size:9px;color:#94a3b8;letter-spacing:2px;margin-top:1px}
+.cdwn{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;color:var(--accent2);background:#1e293b;padding:3px 10px;border-radius:20px;letter-spacing:1px;border:1px solid #334155;white-space:nowrap}
+
+/* WEEK SCROLLER */
+#week-bar{background:#fff;border-bottom:1px solid var(--border);padding:8px 16px;overflow-x:auto;flex-shrink:0;-webkit-overflow-scrolling:touch}
+.wbar-i{display:flex;gap:4px;min-width:max-content}
+.wp{padding:4px 9px;border-radius:20px;font-size:10px;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;border:1.5px solid transparent;transition:all .15s;color:var(--text3)}
+.wp.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow)}
+.page{padding:14px 14px;display:none}
+.page.active{display:block}
+
+/* METRICS GRID */
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+.mbox{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 13px;box-shadow:var(--shadow)}
+.mlbl{font-size:8px;color:var(--text3);letter-spacing:2px;margin-bottom:4px;font-family:'Syne',sans-serif;font-weight:700;text-transform:uppercase}
+.mval{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;line-height:1;margin-bottom:2px}
+.msub{font-size:10px;color:var(--text3)}
+
+/* READINESS */
+.rbar{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:10px;box-shadow:var(--shadow)}
+.rbar-track{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin:6px 0}
+.rbar-fill{height:100%;border-radius:4px;transition:width .5s}
+
+/* HERO TODAY */
+.today-hero{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);color:#fff;border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid #334155;position:relative;overflow:hidden}
+
+/* SESSION SWAP */
+.swap-panel{background:#fff;border:2px solid var(--accent2);border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow2)}
+.swap-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:var(--accent);margin-bottom:10px}
+.swap-days{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.swap-day{padding:10px 4px;border-radius:10px;border:2px solid var(--border);background:var(--bg2);text-align:center;cursor:pointer;transition:all .15s}
+.swap-day.selected{background:var(--accent);border-color:var(--accent);color:#fff}
+.swap-day .sd-name{font-family:'Syne',sans-serif;font-size:11px;font-weight:700}
+.swap-day .sd-act{font-size:9px;color:inherit;opacity:.7;margin-top:2px}
+.swap-day .sd-icon{font-size:20px;margin-bottom:2px}
+.swap-confirm-btn{width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;cursor:pointer}
+.swap-confirm-btn:disabled{background:var(--bg3);color:var(--text3);cursor:not-allowed}
+
+/* SESSION CARD */
+.session-card{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:var(--shadow)}
+.session-card.intensity-card{border-left:4px solid var(--accent)}
+.session-card.rest-card{background:#f8fafc;border-style:dashed;opacity:.8}
+.session-card.bonus-card{border:2px dashed var(--accent2);background:#eff6ff}
+.session-card.swapped{border-left:4px solid var(--amber)}
+
+/* FORM FIELDS */
+.sfield{display:flex;flex-direction:column;gap:4px;margin-bottom:8px}
+.sfield label{font-size:9px;color:var(--text3);letter-spacing:1px;font-family:'Syne',sans-serif;font-weight:700;text-transform:uppercase}
+.sfield input,.sfield select,.sfield textarea{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:13px;outline:none;width:100%}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px}
+.form-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+
+/* BUTTONS */
+.btn{background:var(--accent);color:#fff;border:none;padding:10px 16px;border-radius:8px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;cursor:pointer;width:100%;margin-top:6px}
+.btn-outline{background:transparent;border:2px dashed var(--accent2);color:var(--accent)}
+.btn-danger{background:var(--red)}
+
+/* QUICK ENTRY OVERLAY */
+#quick-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.7);z-index:100;backdrop-filter:blur(4px);align-items:flex-end}
+#quick-overlay.open{display:flex}
+#quick-panel{background:#fff;width:100%;border-radius:20px 20px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow-y:auto}
+#quick-panel h3{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;margin-bottom:4px}
+.q-field{margin-bottom:14px}
+.q-label{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;display:block;margin-bottom:6px}
+.q-input{width:100%;background:var(--bg2);border:1.5px solid var(--border);color:var(--text);border-radius:10px;padding:12px 14px;font-family:'Inconsolata',monospace;font-size:18px;font-weight:600;outline:none}
+.q-btns{display:flex;gap:8px}
+.q-btn{flex:1;padding:12px 6px;border-radius:10px;border:2px solid var(--border);background:var(--bg2);font-size:22px;cursor:pointer;text-align:center}
+.q-btn.sel{border-color:var(--accent);background:#eff6ff}
+.q-btn span{display:block;font-size:9px;font-family:'Syne',sans-serif;font-weight:700;color:var(--text3);margin-top:3px}
+.q-btn.sel span{color:var(--accent)}
+.q-save{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;cursor:pointer}
+
+/* FLOATING ACTION BUTTON */
+#fab{position:fixed;bottom:calc(var(--safe-bottom) + 76px);right:16px;width:54px;height:54px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow2);border:none;z-index:40;cursor:pointer}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div id="app-header">
+  <div class="hdr-row">
+    <div>
+      <div class="hdr-title">MCC 2026 — TRACKER</div>
+      <div class="hdr-sub" id="hdr-date">SEMAINE CORANTE</div>
+    </div>
+    <div class="cdwn" id="countdown-widget">-- J- AVANT LA COURSE</div>
+  </div>
+</div>
+
+<div id="week-bar">
+  <div class="wbar-i" id="week-tabs-container"></div>
+</div>
+
+<div id="app-content">
+  <div id="page-today" class="page active">
+    <div id="pain-banner-container"></div>
+    <div class="today-hero">
+      <div class="section-lbl" style="color:var(--accent2);margin:0">AUJOURD'HUI</div>
+      <h2 id="hero-day-title" style="color:#fff;margin-top:4px;margin-bottom:6px">Chargement...</h2>
+      <div id="hero-day-body" style="font-size:12px;opacity:.9;line-height:1.5"></div>
+    </div>
+    
+    <div id="swap-module-container"></div>
+    
+    <div class="section-lbl">SÉANCES DU JOUR</div>
+    <div id="today-sessions-list"></div>
+  </div>
+
+  <div id="page-week" class="page">
+    <div class="metrics">
+      <div class="mbox">
+        <div class="mlbl">Volume Cible</div>
+        <div class="mval" id="w-target-vol">0h00</div>
+        <div class="msub" id="w-target-km">0 km</div>
+      </div>
+      <div class="mbox">
+        <div class="mlbl">Volume Réalisé</div>
+        <div class="mval" id="w-real-vol" style="color:var(--accent)">0h00</div>
+        <div class="msub" id="w-real-km">0 km</div>
+      </div>
+    </div>
+    <div class="metrics">
+      <div class="mbox">
+        <div class="mlbl">TRIMP Prévu</div>
+        <div class="mval" id="w-planned-trimp">0 pts</div>
+      </div>
+      <div class="mbox">
+        <div class="mlbl">TRIMP Actuel</div>
+        <div class="mval" id="w-real-trimp" style="color:var(--purple)">0 pts</div>
+      </div>
+    </div>
+    <div id="week-sessions-full-list"></div>
+  </div>
+
+  <div id="page-analytics" class="page">
+    <h2>ANALYSE DE LA CHARGE</h2>
+    <div class="chart-wrap">
+      <canvas id="chart-trimp"></canvas>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="chart-volume"></canvas>
+    </div>
+  </div>
+
+  <div id="page-settings" class="page">
+    <h2>RÉGLAGES & STRATÉGIE</h2>
+    <div class="card" style="padding:14px;margin-bottom:12px">
+      <h3>Sauvegarde des données</h3>
+      <p style="font-size:11px;color:var(--text3);margin-bottom:10px">Toutes vos modifications et notes sont stockées localement dans votre navigateur.</p>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-sm" onclick="exportData()" style="flex:1">📤 EXPORTER (JSON)</button>
+        <button class="btn btn-sm btn-outline" onclick="triggerImport()" style="flex:1">📥 IMPORTER</button>
+      </div>
+      <input type="file" id="import-file" style="display:none" onchange="importData(event)">
+    </div>
+    <button class="btn btn-danger" onclick="resetAllData()">⚠️ RÉINITIALISER L'APPLICATION</button>
+  </div>
+</div>
+
+<button id="fab">⚡</button>
+
+<div id="quick-overlay">
+  <div id="quick-panel">
+    <h3>Valider la séance</h3>
+    <div class="q-sub" id="q-session-info">Aucune séance sélectionnée</div>
+    
+    <div class="form-grid">
+      <div class="q-field">
+        <label class="q-label">Durée Réelle (min)</label>
+        <input class="q-input" id="q-dur" type="number" inputmode="numeric">
+      </div>
+      <div class="q-field">
+        <label class="q-label">Distance Réelle (km)</label>
+        <input class="q-input" id="q-dist" type="number" step="0.1" inputmode="decimal">
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="q-field">
+        <label class="q-label">D+ Réel (m)</label>
+        <input class="q-input" id="q-dplus" type="number" inputmode="numeric">
+      </div>
+      <div class="q-field">
+        <label class="q-label">RPE (Effort 1-10)</label>
+        <select class="q-input" id="q-rpe" style="font-size:16px;height:49px">
+          <option value="1">1 - Très facile</option>
+          <option value="2">2 - Facile</option>
+          <option value="3">3 - Modéré</option>
+          <option value="4">4 - Un peu dur</option>
+          <option value="5">5 - Dur</option>
+          <option value="6">6 - Soutenu</option>
+          <option value="7">7 - Très dur</option>
+          <option value="8">8 - Épuisant</option>
+          <option value="9">9 - Extrême</option>
+          <option value="10">10 - Maximal</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="q-field">
+      <label class="q-label">Ressenti Général</label>
+      <div class="q-btns">
+        <div class="q-btn" id="qf-1" onclick="selectFeel(1)">😣<span>NASE</span></div>
+        <div class="q-btn" id="qf-2" onclick="selectFeel(2)">😮‍💨<span>DUR</span></div>
+        <div class="q-btn" id="qf-3" onclick="selectFeel(3)">🙂<span>BIEN</span></div>
+        <div class="q-btn" id="qf-4" onclick="selectFeel(4)">🔥<span>SUPER</span></div>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="q-field">
+        <label class="q-label">Douleur ?</label>
+        <select class="q-input" id="q-pain" onchange="togglePainDetail()" style="font-size:15px;height:49px">
+          <option value="0">✅ Aucune</option>
+          <option value="1">⚠️ Oui</option>
+        </select>
+      </div>
+      <div class="q-field" id="q-pain-zone-field" style="display:none">
+        <label class="q-label">Zone douloureuse</label>
+        <select class="q-input" id="q-pain-zone" style="font-size:15px;height:49px">
+          <option value="">Où ?</option>
+          <option>Biceps fémoral G</option>
+          <option>Biceps fémoral D</option>
+          <option>Tendon d'Achille G</option>
+          <option>Tendon d'Achille D</option>
+          <option>Genou (Rotulien/TFL) G</option>
+          <option>Genou (Rotulien/TFL) D</option>
+          <option>Périoste / Tibia</option>
+          <option>Pied / Fascia</option>
+          <option>Autre / Dos</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="q-field">
+      <label class="q-label">Notes de séance</label>
+      <input class="q-input" id="q-comment" type="text" placeholder="Sensations, météo, matos..." style="font-size:14px">
+    </div>
+
+    <div id="q-feedback" style="font-size:11px;font-weight:700;text-align:center;margin-bottom:10px"></div>
+    <button class="q-save" onclick="saveQuickData()">ENREGISTRER LA SÉANCE</button>
+    <button class="btn btn-outline" onclick="closeQuick()" style="margin-top:8px">Annuler</button>
+  </div>
+</div>
+
+<div id="app-nav">
+  <button class="nav-btn on" data-page="today" onclick="navTo('today')"><span class="nav-icon">📅</span><span>TODAY</span></button>
+  <button class="nav-btn" data-page="week" onclick="navTo('week')"><span class="nav-icon">📊</span><span>SEMAINE</span></button>
+  <button class="nav-btn" data-page="analytics" onclick="navTo('analytics')"><span class="nav-icon">📈</span><span>CHARGES</span></button>
+  <button class="nav-btn" data-page="settings" onclick="navTo('settings')"><span class="nav-icon">⚙️</span><span>STRATÉGIE</span></button>
+</div>
+
+<script>
+// CONFIGURATION DE BASE ET CALENDRIER DES 12 SEMAINES
+const START_DATE = new Date("2026-06-01"); 
+const RACE_DATE = new Date("2026-08-25");
+
+const PLAN_DATA = [
+  {
+    id: 1, label: "S1", name: "Reprise structurée", vol: "6h00", km: "45km", trimp: 380,
+    days: [
+      { day: "Lun", act: "Repos", icon: "🛌", type: "rest", desc: "Repos complet ou étirements légers." },
+      { day: "Mar", act: "Footing", icon: "🏃", type: "run", desc: "45 min en Endurance Fondamentale (Z2). Relâché.", pDur: 45, pDist: 7, pDplus: 0, pTrimp: 45 },
+      { day: "Mer", act: "Natation", icon: "🏊", type: "swim", desc: "45 min : 500m Échauffement, 10x50m progressifs, 200m souple.", pDur: 45, pTrimp: 40 },
+      { day: "Jeu", act: "Seuil", icon: "⚡", type: "run", desc: "1h05 dont 3x8 min à Allure Marathon / Seuil (Z3), Récupération 3 min.", pDur: 65, pDist: 11, pDplus: 150, pTrimp: 85 },
+      { day: "Ven", act: "Repos", icon: "🛌", type: "rest", desc: "Repos complet." },
+      { day: "Sam", act: "Sortie Longue", icon: "🏔️", type: "run", desc: "1h40 en terrain vallonné. Focus technique de descente.", pDur: 100, pDist: 15, pDplus: 400, pTrimp: 130 },
+      { day: "Dim", act: "Vélo / Récup", icon: "🚴", type: "bike", desc: "1h30 de vélo de route en Z1 moulinage complet.", pDur: 90, pTrimp: 80 }
+    ]
+  },
+  {
+    id: 2, label: "S2", name: "Développement Volume", vol: "7h00", km: "52km", trimp: 460,
+    days: [
+      { day: "Lun", act: "Repos", icon: "🛌", type: "rest", desc: "Repos complet." },
+      { day: "Mar", act: "Footing + Côtes", icon: "🏃", type: "run", desc: "55 min dont 8x15 sec en côte explosive, descente marchée.", pDur: 55, pDist: 8, pDplus: 100, pTrimp: 65 },
+      { day: "Mer", act: "Natation", icon: "🏊", type: "swim", desc: "1h00 : Corps de séance 4x200m tempo, pull-buoy facultatif.", pDur: 60, pTrimp: 55 },
+      { day: "Jeu", act: "Seuil Vallonné", icon: "⚡", type: "run", desc: "1h10 dont 4x6 min en montée rythmée Z3, descente active.", pDur: 70, pDist: 12, pDplus: 300, pTrimp: 100 },
+      { day: "Ven", act: "Repos", icon: "🛌", type: "rest", desc: "Repos complet." },
+      { day: "Sam", act: "Sortie Longue Rando-Course", icon: "🏔️", type: "run", desc: "2h15 en montagne. Travail de marche active avec bâtons.", pDur: 135, pDist: 18, pDplus: 700, pTrimp: 180 },
+      { day: "Dim", act: "Vélo Route", icon: "🚴", type: "bike", desc: "1h40 de foncier Z2 sur le plat ou vallonné léger.", pDur: 100, pTrimp: 90 }
+    ]
+  },
+  {
+    id: 3, label: "S3", name: "Charge Spécifique 1", vol: "8h15", km: "60km", trimp: 550,
+    days: [
+      { day: "Lun", act: "Repos", icon: "🛌", type: "rest", desc: "Repos complet." },
+      { day: "Mar", act: "Footing Rythmé", icon: "🏃", type: "run", desc: "1h00 en Endurance Fondamentale avec 5 lignes droites à la fin.", pDur: 60, pDist: 10, pDplus: 0, pTrimp: 60 },
+      { day: "Mer", act: "Natation Endurance", icon: "🏊", type: "swim", desc: "1h00 continue ou longs blocs (ex: 3x400m régulier).", pDur: 60, pTrimp: 50 },
+      { day: "Jeu", act: "Bloc VMA Trail", icon: "⚡", type: "run", desc: "1h15 dont 2 séries de 8x30\"-30\" sur piste ou pelouse.", pDur: 75, pDist: 13, pDplus: 200, pTrimp: 110 },
+      { day: "Ven", act: "Repos", icon: "🛌", type: "rest", desc: "Repos." },
+      { day: "Sam", act: "Sortie Longue Chocs", icon: "🏔️", type: "run", desc: "2h45 en montagne (Semnoz/Veyrier). Enchaîner les bosses.", pDur: 165, pDist: 22, pDplus: 1100, pTrimp: 240 },
+      { day: "Dim", act: "Vélo Récup", icon: "🚴", type: "bike", desc: "2h00 vélo ou home-trainer très souple.", pDur: 120, pTrimp: 90 }
+    ]
+  },
+  {
+    id: 4, label: "S4", name: "Assimilation & Tests", vol: "4h30", km: "30km", trimp: 280,
+    days: [
+      { day: "Lun", act: "Repos", icon: "🛌", type: "rest", desc: "Repos complet." },
+      { day: "Mar", act: "Footing Court", icon: "🏃", type: "run", desc: "40 min ultra-souple. Régénération active.", pDur: 40, pDist: 6, pDplus: 0, pTrimp: 35 },
+      { day: "Mer", act: "Natation Souple", icon: "🏊", type: "swim", desc: "45 min focus technique et relâchement.", pDur: 45, pTrimp: 35 },
+      { day: "Jeu", act: "Test Allure Course", icon: "⚡", type: "run", desc: "1h00 avec 20 min allure cible MCC. Évaluer l'aisance.", pDur: 60, pDist: 10, pDplus: 200, pTrimp: 80 },
+      { day: "Ven", act: "Repos", icon: "🛌", type: "rest", desc: "Repos complet." },
+      { day: "Sam", act: "Rando Active Plaisir", icon: "🏔️", type: "run", desc: "1h45 de sortie vallonnée tranquille sans forcer.", pDur: 105, pDist: 14, pDplus: 400, pTrimp: 100 },
+      { day: "Dim", act: "Repos / Étirements", icon: "🛌", type: "rest", desc: "Journée off complète pour assimiler ce premier bloc." }
+    ]
+  },
+  {
+    id: 5, label: "S5", name: "Renforcement & Bloc D+", vol: "7h30", km: "55km", trimp: 490,
+    days: [
+      { day: "Lun", act: "Repos", icon: "🛌", type: "rest", desc: "Repos complet." },
+      { day: "Mar", act: "Footing Éco", icon: "🏃", type: "run", desc: "50 min de course en aisance respiratoire.", pDur: 50, pDist: 8, pDplus: 0, pTrimp: 50 },
+      { day: "Mer", act: "Natation Rythme", icon: "🏊", type: "swim", desc: "1h00 avec changements d'allures (sprints courts).", pDur: 60, pTrimp: 55 },
+      { day: "Jeu", act: "Seuil Long en Côte", icon: "⚡", type: "run", desc: "1h20 dont 2x15 min en montée continue Z3 soutenue.", pDur: 80, pDist: 13, pDplus: 500, pTrimp: 115 },
+      { day: "Ven", act: "Repos", icon: "🛌", type: "rest", desc: "Repos." },
+      { day: "Sam", act: "Sortie Longue Technique", icon: "🏔️", type: "run", desc: "2h30 avec de grosses descentes techniques engagées.", pDur: 150, pDist: 20, pDplus: 900, pTrimp: 190 },
+      { day: "Dim", act: "Vélo Foncier", icon: "🚴", type: "bike", desc: "1h30 en agilité pour drainer les toxines.", pDur: 90, pTrimp: 80 }
+    ]
+  },
+  {
+    id: 6, label: "S6", name: "Volume Maximal", vol: "9h00", km: "68km", trimp: 610,
+    days: [
+      { day: "Lun", act: "Repos", icon: "🛌", type: "rest", desc: "Repos complet de sécurité." },
+      { day: "Mar", act: "Footing Actif", icon: "🏃", type: "run", desc: "1h00 régulier avec bonnes sensations.", pDur: 60, pDist: 10, pDplus: 100, pTrimp: 65 },
+      { day: "Mer", act: "Natation Endurance", icon: "🏊", type: "swim", desc: "1h00 en augmentant la distance totale nagée.", pDur: 60, pTrimp: 50 },
+      { day: "Jeu", act: "Fartlek Pyramidal", icon: "⚡", type: "run", desc: "1h20 avec blocs de 4'-6'-8'-6'-4' allure soutenue.", pDur: 80, pDist: 14, pDplus: 250, pTrimp: 125 },
+      { day: "Ven", act: "Repos", icon: "🛌", type: "rest", desc: "Repos." },
+      { day: "Sam", act: "Le Grand Bloc Montagne", icon: "🏔️", type: "run", desc: "3h30 de rando-course. Le gros test de volume de la prepa.", pDur: 210, pDist: 28, pDplus: 1500, pTrimp: 280 },
+      { day: "Dim", act: "Vélo Décrassage", icon: "🚴", type: "bike", desc: "1h30 de home trainer ou route sans résistance.", pDur: 90, pTrimp: 90 }
+    ]
+  },
+  {
+    id: 7, label: "S7", name: "Assimilation & Vitesse", vol: "5h00", km: "35km", trimp: 310,
+    days: [
+      { day: "Lun", act: "Repos", icon: "🛌", type: "rest", desc: "Repos complet." },
+      { day: "Mar", act: "Footing Court", icon: "🏃", type: "run", desc: "45 min très tranquille.", pDur: 45, pDist: 7, pDplus: 0, pTrimp: 40 },
+      { day: "Mer", act: "Natation Technique", icon: "🏊", type: "swim", desc: "45 min éducatifs jambes/bras.", pDur: 45, pTrimp: 35 },
+      { day: "Jeu", act: "Rappels Dynamiques", icon: "⚡", type: "run", desc: "1h00 dont 10x100m en accélération progressive sur plat.", pDur: 60, pDist: 9, pDplus: 100, pTrimp: 75 },
+      { day: "Ven", act: "Repos", icon: "🛌", type: "rest", desc: "Repos complet." },
+      { day: "Sam", act: "Sortie Plaisir Vallonnée", icon: "🏔️", type: "run", desc: "1h30 sans regarder la montre, aux sensations.", pDur: 90, pDist: 12, pDplus: 450, pTrimp: 110 },
+      { day: "Dim", act: "Repos Total", icon: "🛌", type: "rest", desc: "Recharge des batteries." }
+    ]
+  },
+  {
+    id: 8, label: "S8", name: "Spécifique Intensité", vol: "8h00", km: "58km", trimp: 530,
+    days: [
+      { day: "Lun", act: "Repos", icon: "🛌", type: "rest", desc: "Repos." },
+      { day: "Mar", act: "Footing Rythme", icon: "🏃", type: "run", desc: "55 min de relance continue.", pDur: 55, pDist: 9, pDplus: 0, pTrimp: 55 },
+      { day: "Mer", act: "Natation Seuil", icon: "🏊", type: "swim", desc: "1h00 dont 6x100m soutenus départ fixe.", pDur: 60, pTrimp: 60 },
+      { day: "Jeu", act: "Seuil + Bosses", icon: "⚡", type: "run", desc: "1h20 avec 3 blocs de 10 min en escalier.", pDur: 80, pDist: 13, pDplus: 400, pTrimp: 120 },
+      { day: "Ven", act: "Repos", icon: "🛌", type: "rest", desc: "Repos." },
+      { day: "Sam", act: "Sortie Longue Rythmée", icon: "🏔️", type: "run", desc: "2h45 intégrant des portions de plat courues vite.", pDur: 165, pDist: 23, pDplus: 1000, pTrimp: 210 },
+      { day: "Dim", act: "Vélo Foncier", icon: "🚴", type: "bike", desc: "1h30 de vélo en Z2 constante.", pDur: 90, pTrimp: 85 }
+    ]
+  },
+  {
+    id: 9, label: "S9", name: "Week-end Choc Simulé", vol: "9h30", km: "65km", trimp: 650,
+    days: [
+      { day: "Lun", act: "Repos", icon: "🛌", type: "rest", desc: "Repos." },
+      { day: "Mar", act: "Footing Souple", icon: "🏃", type: "run", desc: "50 min d'entretien musculaire.", pDur: 50, pDist: 8, pDplus: 0, pTrimp: 45 },
+      { day: "Mer", act: "Natation Foncier", icon: "🏊", type: "swim", desc: "1h00 séries moyennes à longues.", pDur: 60, pTrimp: 50 },
+      { day: "Jeu", act: "Rappel Seuil Dur", icon: "⚡", type: "run", desc: "1h10 dont 3x3000m Allure Course soutenu.", pDur: 70, pDist: 12, pDplus: 150, pTrimp: 105 },
+      { day: "Ven", act: "Repos PrÉ-CHOC", icon: "🛌", type: "rest", desc: "Préparer le matos et bien s'hydrater." },
+      { day: "Sam", act: "Choc J1 : Intensité Montagne", icon: "🏔️", type: "run", desc: "2h30 avec gros dénivelé enchaîné à un bon rythme.", pDur: 150, pDist: 18, pDplus: 1200, pTrimp: 195 },
+      { day: "Dim", act: "Choc J2 : Volume Fatigué", icon: "🏔️", type: "run", desc: "3h00 de rando-course le matin sur jambes lourdes.", pDur: 180, pDist: 24, pDplus: 1100, pTrimp: 205 }
+    ]
+  },
+  {
+    id: 10, label: "S10", name: "Affûtage Étape 1", vol: "5h30", km: "38km", trimp: 350,
+    days: [
+      { day: "Lun", act: "Repos", icon: "🛌", type: "rest", desc: "Repos complet impératif." },
+      { day: "Mar", act: "Footing Régulation", icon: "🏃", type: "run", desc: "45 min. On commence à réduire le volume.", pDur: 45, pDist: 7, pDplus: 0, pTrimp: 40 },
+      { day: "Mer", act: "Natation Récup", icon: "🏊", type: "swim", desc: "45 min très tranquille.", pDur: 45, pTrimp: 35 },
+      { day: "Jeu", act: "Séance Allure Clé", icon: "⚡", type: "run", desc: "1h05 dont 15 min Allure MCC. Ne pas se fatiguer.", pDur: 65, pDist: 10, pDplus: 200, pTrimp: 85 },
+      { day: "Ven", act: "Repos", icon: "🛌", type: "rest", desc: "Repos." },
+      { day: "Sam", act: "Sortie Longue Réduite", icon: "🏔️", type: "run", desc: "1h45 en nature avec quelques accélérations ludiques.", pDur: 105, pDist: 14, pDplus: 500, pTrimp: 110 },
+      { day: "Dim", act: "Vélo Léger", icon: "🚴", type: "bike", desc: "1h00 en roue libre totale.", pDur: 60, pTrimp: 40 }
+    ]
+  },
+  {
+    id: 11, label: "S11", name: "Affûtage Étape 2", vol: "4h00", km: "25km", trimp: 240,
+    days: [
+      { day: "Lun", act: "Repos", icon: "🛌", type: "rest", desc: "Repos." },
+      { day: "Mar", act: "Footing court", icon: "🏃", type: "run", desc: "40 min de relâchement musculaire.", pDur: 40, pDist: 6, pDplus: 0, pTrimp: 35 },
+      { day: "Mer", act: "Natation Éveil", icon: "🏊", type: "swim", desc: "45 min avec quelques lignes rapides.", pDur: 45, pTrimp: 35 },
+      { day: "Jeu", act: "Rappels courts", icon: "⚡", type: "run", desc: "50 min dont 5x200m dynamiques mais sans forcer.", pDur: 50, pDist: 7, pDplus: 100, pTrimp: 60 },
+      { day: "Ven", act: "Repos", icon: "🛌", type: "rest", desc: "Repos complet." },
+      { day: "Sam", act: "Dernière Sortie Nature", icon: "🏔️", type: "run", desc: "1h15 à plat ou vallonné très léger pour garder le tonus.", pDur: 75, pDist: 10, pDplus: 200, pTrimp: 75 },
+      { day: "Dim", act: "Repos Total", icon: "🛌", type: "rest", desc: "Repos et sommeil." }
+    ]
+  },
+  {
+    id: 12, label: "S12", name: "Semaine de Course (MCC)", vol: "Course !", km: "40km", trimp: 400,
+    days: [
+      { day: "Lun", act: "Éveil Musculaire", icon: "🏃", type: "run", desc: "25 min de footing ultra-léger + 3 accélérations progressives.", pDur: 25, pDist: 4, pDplus: 0, pTrimp: 20 },
+      { day: "Mar", act: "MCC — JOUR DE COURSE", icon: "🏁", type: "run", desc: "40km, 2300m D+. Profiter, gérer le rythme et l'alimentation !", pDur: 300, pDist: 40, pDplus: 2300, pTrimp: 350 },
+      { day: "Mer", act: "Repos / Récupération", icon: "🛌", type: "rest", desc: "Repos complet, hydratation, massage." },
+      { day: "Jeu", act: "Repos", icon: "🛌", type: "rest", desc: "Repos." },
+      { day: "Ven", act: "Repos", icon: "🛌", type: "rest", desc: "Repos." },
+      { day: "Sam", act: "Repos", icon: "🛌", type: "rest", desc: "Repos." },
+      { day: "Dim", act: "Repos", icon: "🛌", type: "rest", desc: "Repos." }
+    ]
+  }
+];
+
+// VARIABLES GLOBALES D'ÉTAT
+let plan = JSON.parse(JSON.stringify(PLAN_DATA));
+let userLogs = {};
+let selWeek = 0; // Index de semaine sélectionné (0 à 11)
+let activePage = "today";
+let chartTrimpInstance = null;
+let chartVolumeInstance = null;
+
+// GESTION DU LOCALSTORAGE
+function loadState() {
+  const storedLogs = localStorage.getItem("mcc_user_logs");
+  if (storedLogs) userLogs = JSON.parse(storedLogs);
+  const storedPlan = localStorage.getItem("mcc_plan_swaps");
+  if (storedPlan) plan = JSON.parse(storedPlan);
+}
+function saveState() {
+  localStorage.setItem("mcc_user_logs", JSON.stringify(userLogs));
+  localStorage.setItem("mcc_plan_swaps", JSON.stringify(plan));
+}
+
+// NAVIGATION ENTRE LES ONGLETS
+function navTo(pageId) {
+  activePage = pageId;
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("on"));
+  
+  const targetPage = document.getElementById(`page-${pageId}`);
+  if(targetPage) targetPage.classList.add("active");
+  
+  const targetBtn = document.querySelector(`[data-page="${pageId}"]`);
+  if(targetBtn) targetBtn.classList.add("on");
+
+  if (pageId === "analytics") {
+    setTimeout(renderCharts, 50);
+  } else {
+    renderAll();
+  }
+}
+
+// CALCULS DES ENTRAÎNEMENTS & TRIMPS
+function getLogKey(weekIndex, dayIndex) {
+  return `w${weekIndex}d${dayIndex}`;
+}
+function calculateTRIMP(dur, rpe) {
+  if (!dur || !rpe) return 0;
+  return Math.round(dur * rpe * 0.7);
+}
+function getWeekTRIMPs(weekIndex) {
+  let planned = 0, realized = 0;
+  plan[weekIndex].days.forEach((d, dIdx) => {
+    planned += (d.pTrimp || 0);
+    const log = userLogs[getLogKey(weekIndex, dIdx)];
+    if (log && log.done) {
+      realized += calculateTRIMP(log.dur, log.rpe);
+    }
+  });
+  return { planned, realized };
+}
+
+// COMPTE À REBOURS ET RECHERCHE DE LA SEMAINE EN COURS
+function updateTimeContext() {
+  const now = new Date();
+  
+  // Widget J- Avant la course
+  const diffTime = RACE_DATE - now;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const cdWidget = document.getElementById("countdown-widget");
+  if (diffDays > 0) {
+    cdWidget.textContent = `J-${diffDays} AVANT LA MCC`;
+  } else if (diffDays === 0) {
+    cdWidget.textContent = `🏁 JOUR DE COURSE !`;
+  } else {
+    cdWidget.textContent = `COMPLÉTÉ 🎉`;
+  }
+
+  // Détection de la semaine courante en fonction de START_DATE
+  const msElapsed = now - START_DATE;
+  const currentWeekIndex = Math.floor(msElapsed / (1000 * 60 * 60 * 24 * 7));
+  
+  if (currentWeekIndex >= 0 && currentWeekIndex < plan.length) {
+    if (selWeek === 0 && localStorage.getItem("mcc_plan_swaps") === null) {
+      selWeek = currentWeekIndex;
+    }
+  }
+}
+
+// RENDU DE L'INTERFACE GLOBALE
+function renderAll() {
+  updateTimeContext();
+  renderWeekTabs();
+  renderTodayPage();
+  renderWeekPage();
+}
+
+// BANDEAU SEMAINE SUPERIEUR
+function renderWeekTabs() {
+  const container = document.getElementById("week-tabs-container");
+  container.innerHTML = "";
+  plan.forEach((w, idx) => {
+    const btn = document.createElement("div");
+    btn.className = `wp ${idx === selWeek ? 'on' : ''}`;
+    btn.textContent = w.label;
+    btn.onclick = () => {
+      selWeek = idx;
+      renderAll();
+    };
+    container.appendChild(btn);
+  });
+  document.getElementById("hdr-date").textContent = plan[selWeek].name.toUpperCase();
+}
+
+// BANDEAU DES DOULEURS SIGNALEES
+function renderPainBanner() {
+  const container = document.getElementById("pain-banner-container");
+  container.innerHTML = "";
+  
+  let activePains = [];
+  for (let key in userLogs) {
+    if (userLogs[key].pain === 1 && userLogs[key].painZone) {
+      activePains.push(userLogs[key].painZone);
+    }
+  }
+  
+  // Supprimer les doublons de zone
+  activePains = [...new Set(activePains)];
+  
+  if (activePains.length > 0) {
+    const banner = document.createElement("div");
+    banner.className = "banner ban-danger";
+    banner.innerHTML = `<span>⚠️ <strong>Points de vigilance douleur :</strong> ${activePains.join(", ")} (Considérer un switch de séance si douleur > 3/10)</span>`;
+    container.appendChild(banner);
+  }
+}
+
+// ONGLET 1: RENDU DE "TODAY" & SÉANCES DU JOUR
+function renderTodayPage() {
+  renderPainBanner();
+  
+  // Trouver le jour actuel (0=Dim, 1=Lun, etc.) à mapper sur notre tableau (0=Lun, 6=Dim)
+  let sysDay = new Date().getDay();
+  let dayIdx = sysDay === 0 ? 6 : sysDay - 1; 
+  
+  const currentDayData = plan[selWeek].days[dayIdx];
+  document.getElementById("hero-day-title").textContent = `${currentDayData.day.toUpperCase()} — SEMAINE ${plan[selWeek].label}`;
+  document.getElementById("hero-day-body").textContent = `${currentDayData.act} : ${currentDayData.desc}`;
+  
+  // Rendu de la liste des séances interactives du jour de la semaine sélectionnée
+  const listContainer = document.getElementById("today-sessions-list");
+  listContainer.innerHTML = "";
+  
+  currentDayData.pIdx = dayIdx; // Attacher l'index physique du jour
+  listContainer.appendChild(createSessionCard(currentDayData, dayIdx));
+  
+  // Gestionnaire de switch de séance
+  renderSwapModule(dayIdx);
+}
+
+// ENTRAÎNEMENT SWAP (CHANGEMENT DE JOUR DE SÉANCE)
+let swapSourceIdx = null;
+function renderSwapModule(currentDayIdx) {
+  const container = document.getElementById("swap-module-container");
+  container.innerHTML = "";
+  
+  const swapPanel = document.createElement("div");
+  swapPanel.className = "swap-panel";
+  swapPanel.innerHTML = `
+    <div class="swap-title">🔄 Changer l'ordre ou décaler une séance</div>
+    <div style="font-size:11px;color:var(--text3);margin-bottom:8px">Sélectionnez deux jours dans la semaine courante pour intervertir leurs programmes.</div>
+    <div class="swap-days" id="swap-days-grid"></div>
+    <button class="swap-confirm-btn" id="swap-btn-exec" disabled onclick="executeSwap()">VALIDER LA PERMUTATION</button>
+  `;
+  container.appendChild(swapPanel);
+  
+  const grid = document.getElementById("swap-days-grid");
+  plan[selWeek].days.forEach((d, idx) => {
+    const dBox = document.createElement("div");
+    dBox.className = `swap-day ${swapSourceIdx === idx ? 'selected' : ''}`;
+    dBox.innerHTML = `
+      <div class="sd-icon">${d.icon}</div>
+      <div class="sd-name">${d.day}</div>
+      <div class="sd-act">${d.act}</div>
+    `;
+    dBox.onclick = () => {
+      if (swapSourceIdx === null) {
+        swapSourceIdx = idx;
+        renderSwapModule(currentDayIdx);
+      } else if (swapSourceIdx === idx) {
+        swapSourceIdx = null;
+        renderSwapModule(currentDayIdx);
+      } else {
+        // Deuxième sélection effectuée -> Activer bouton
+        document.getElementById("swap-btn-exec").removeAttribute("disabled");
+        document.querySelectorAll(".swap-day").forEach(b => b.classList.remove("selected"));
+        dBox.classList.add("selected");
+        document.getElementById("swap-days-grid").children[swapSourceIdx].classList.add("selected");
+        window.swapTargetIdx = idx;
+      }
+    };
+    grid.appendChild(dBox);
+  });
+}
+
+function executeSwap() {
+  if (swapSourceIdx !== null && window.swapTargetIdx !== null) {
+    // Permuter dans le plan clone
+    const temp = plan[selWeek].days[swapSourceIdx];
+    plan[selWeek].days[swapSourceIdx] = plan[selWeek].days[window.swapTargetIdx];
+    plan[selWeek].days[window.swapTargetIdx] = temp;
+    
+    // Inverser également l'historique utilisateur associé pour ne pas fausser les validations
+    const keySrc = getLogKey(selWeek, swapSourceIdx);
+    const keyDst = getLogKey(selWeek, window.swapTargetIdx);
+    const tempLog = userLogs[keySrc];
+    userLogs[keySrc] = userLogs[keyDst];
+    userLogs[keyDst] = tempLog;
+    
+    swapSourceIdx = null;
+    window.swapTargetIdx = null;
+    saveState();
+    renderAll();
+  }
+}
+
+// CONSTRUCTION DU COMPOSANT DE SÉANCE D'ENTRAÎNEMENT
+function createSessionCard(d, dIdx) {
+  const logKey = getLogKey(selWeek, dIdx);
+  const log = userLogs[logKey] || { done: false };
+  
+  const card = document.createElement("div");
+  card.className = `session-card ${d.type === 'rest' ? 'rest-card' : d.type === 'run' && d.act.includes('Seuil') ? 'intensity-card' : ''}`;
+  
+  let headerHtml = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+      <div>
+        <span style="font-size:18px;margin-right:6px">${d.icon}</span>
+        <strong style="font-family:'Syne',sans-serif;font-size:14px">${d.day} — ${d.act}</strong>
+      </div>
+      <span class="tag" style="background:${log.done ? 'var(--green)' : 'var(--bg3)'};color:${log.done ? '#fff' : 'var(--text2)'};margin:0">
+        ${log.done ? '✅ COMPLÉTÉ' : '⏳ À FAIRE'}
+      </span>
+    </div>
+  `;
+  
+  let bodyHtml = `
+    <p style="color:var(--text2);margin-bottom:8px;line-height:1.4">${d.desc}</p>
+  `;
+  
+  if (d.pDur || d.pDist) {
+    bodyHtml += `
+      <div class="stat-row">
+        ${d.pDur ? `<div class="stat-item"><div class="stat-lbl">Durée Cible</div><div class="stat-val">${d.pDur} min</div></div>` : ''}
+        ${d.pDist ? `<div class="stat-item"><div class="stat-lbl">Dist. Cible</div><div class="stat-val">${d.pDist} km</div></div>` : ''}
+        ${d.pDplus ? `<div class="stat-item"><div class="stat-lbl">D+ Cible</div><div class="stat-val">+${d.pDplus}m</div></div>` : ''}
+        ${d.pTrimp ? `<div class="stat-item"><div class="stat-lbl">TRIMP Est.</div><div class="stat-val" style="color:var(--text3)">${d.pTrimp} pt</div></div>` : ''}
+      </div>
+    `;
+  }
+  
+  if (log.done) {
+    const calcTrimp = calculateTRIMP(log.dur, log.rpe);
+    bodyHtml += `
+      <div style="background:#f0fdf4;border:1px solid var(--green);border-radius:8px;padding:8px 10px;margin-top:8px;font-size:11px">
+        <div style="font-weight:700;color:var(--green);margin-bottom:4px">💪 RÉALISÉ :</div>
+        <div><strong>Durée :</strong> ${log.dur || 0} min · <strong>Distance :</strong> ${log.dist || 0} km · <strong>D+ :</strong> +${log.dplus || 0}m</div>
+        <div><strong>RPE :</strong> ${log.rpe}/10 · <strong>TRIMP Calculé :</strong> ${calcTrimp} pts</div>
+        ${log.comment ? `<div style="margin-top:4px;font-style:italic;color:var(--text2)">"${log.comment}"</div>` : ''}
+        ${log.pain === 1 ? `<div style="color:var(--red);margin-top:2px;font-weight:700">⚠️ Douleur signalée : ${log.painZone || 'Zone non spécifiée'}</div>` : ''}
+      </div>
+    `;
+  }
+  
+  if (d.type !== 'rest') {
+    const btnAction = document.createElement("button");
+    btnAction.className = `btn ${log.done ? 'btn-outline' : ''}`;
+    btnAction.style.marginTop = "8px";
+    btnAction.textContent = log.done ? "✏️ MODIFIER LES DONNÉES CONSTATÉES" : "⚡ ENREGISTRER MA SÉANCE";
+    btnAction.onclick = () => openQuickSheet(selWeek, dIdx);
+    
+    card.appendChild(window.createHtmlElement(headerHtml + bodyHtml));
+    card.appendChild(btnAction);
+  } else {
+    card.appendChild(window.createHtmlElement(headerHtml + bodyHtml));
+  }
+  
+  return card;
+}
+
+// UTILITAIRE POUR PARSER DU HTML RAPIDEMENT
+window.createHtmlElement = function(htmlString) {
+  const div = document.createElement('div');
+  div.innerHTML = htmlString.trim();
+  return div.firstChild;
+};
+
+// ONGLET 2 : VUE DÉTAILLÉE DE LA SEMAINE EN COURS
+function renderWeekPage() {
+  const tVol = plan[selWeek].vol;
+  const tKm = plan[selWeek].km;
+  document.getElementById("w-target-vol").textContent = tVol;
+  document.getElementById("w-target-km").textContent = typeof tKm === 'string' ? tKm : `${tKm} km`;
+  
+  // Calcul totaux réels
+  let totalMin = 0, totalKm = 0;
+  plan[selWeek].days.forEach((d, dIdx) => {
+    const log = userLogs[getLogKey(selWeek, dIdx)];
+    if (log && log.done) {
+      totalMin += (parseInt(log.dur) || 0);
+      totalKm += (parseFloat(log.dist) || 0);
+    }
+  });
+  
+  const hours = Math.floor(totalMin / 60);
+  const mins = totalMin % 60;
+  document.getElementById("w-real-vol").textContent = `${hours}h${mins.toString().padStart(2, '0')}`;
+  document.getElementById("w-real-km").textContent = `${totalKm.toFixed(1)} km`;
+  
+  const trimps = getWeekTRIMPs(selWeek);
+  document.getElementById("w-planned-trimp").textContent = `${trimps.planned} pts`;
+  document.getElementById("w-real-trimp").textContent = `${trimps.realized} pts`;
+  
+  const fullList = document.getElementById("week-sessions-full-list");
+  fullList.innerHTML = "";
+  plan[selWeek].days.forEach((d, dIdx) => {
+    fullList.appendChild(createSessionCard(d, dIdx));
+  });
+}
+
+// BOÎTE DE DIALOGUE INTERACTIVE (QUICK COMPLETION SHEET)
+let curActiveW = null, curActiveD = null;
+function openQuickSheet(wIdx, dIdx) {
+  curActiveW = wIdx;
+  curActiveD = dIdx;
+  
+  const d = plan[wIdx].days[dIdx];
+  const logKey = getLogKey(wIdx, dIdx);
+  const log = userLogs[logKey] || {};
+  
+  document.getElementById("q-session-info").textContent = `${d.day} — ${wIdx + 1} : ${d.act}`;
+  
+  // Remplissage avec valeurs par défaut ou valeurs déjà sauvées
+  document.getElementById("q-dur").value = log.dur || d.pDur || "";
+  document.getElementById("q-dist").value = log.dist || d.pDist || "";
+  document.getElementById("q-dplus").value = log.dplus || d.pDplus || "0";
+  document.getElementById("q-rpe").value = log.rpe || "3";
+  document.getElementById("q-comment").value = log.comment || "";
+  document.getElementById("q-pain").value = log.pain || "0";
+  document.getElementById("q-pain-zone").value = log.painZone || "";
+  
+  window.selectedFeelVal = log.feel || 3;
+  updateFeelButtons();
+  togglePainDetail();
+  
+  document.getElementById("q-feedback").textContent = "";
+  document.getElementById("quick-overlay").classList.add("open");
+}
+
+function closeQuick() {
+  document.getElementById("quick-overlay").classList.remove("open");
+}
+
+window.selectedFeelVal = 3;
+function selectFeel(val) {
+  window.selectedFeelVal = val;
+  updateFeelButtons();
+}
+
+function updateFeelButtons() {
+  for (let i = 1; i <= 4; i++) {
+    const btn = document.getElementById(`qf-${i}`);
+    if(btn) {
+      if (i === window.selectedFeelVal) btn.classList.add("sel");
+      else btn.classList.remove("sel");
+    }
+  }
+}
+
+function togglePainDetail() {
+  const painVal = document.getElementById("q-pain").value;
+  const field = document.getElementById("q-pain-zone-field");
+  if (painVal === "1") {
+    field.style.display = "block";
+  } else {
+    field.style.display = "none";
+  }
+}
+
+function saveQuickData() {
+  const dur = parseInt(document.getElementById("q-dur").value);
+  const dist = parseFloat(document.getElementById("q-dist").value) || 0;
+  const dplus = parseInt(document.getElementById("q-dplus").value) || 0;
+  const rpe = parseInt(document.getElementById("q-rpe").value);
+  const comment = document.getElementById("q-comment").value;
+  const pain = parseInt(document.getElementById("q-pain").value);
+  const painZone = document.getElementById("q-pain-zone").value;
+  
+  if (!dur || dur <= 0) {
+    document.getElementById("q-feedback").textContent = "⚠️ Veuillez saisir une durée valide en minutes.";
+    document.getElementById("q-feedback").style.color = "var(--red)";
+    return;
+  }
+  
+  const logKey = getLogKey(curActiveW, curActiveD);
+  userLogs[logKey] = {
+    done: true,
+    dur, dist, dplus, rpe, comment, pain,
+    painZone: pain === 1 ? painZone : "",
+    feel: window.selectedFeelVal
+  };
+  
+  saveState();
+  
+  const computed = calculateTRIMP(dur, rpe);
+  document.getElementById("q-feedback").textContent = `✅ Enregistré avec succès ! (+${computed} TRIMP)`;
+  document.getElementById("q-feedback").style.color = "var(--green)";
+  
+  setTimeout(() => {
+    closeQuick();
+    renderAll();
+  }, 1000);
+}
+
+// ÉCOUTEUR DU BOUTON FLOTTANT (FAB FAST VALIDEUR)
+document.getElementById("fab").onclick = () => {
+  let sysDay = new Date().getDay();
+  let dayIdx = sysDay === 0 ? 6 : sysDay - 1;
+  openQuickSheet(selWeek, dayIdx);
+};
+
+// ONGLET 3 : ANALYSE GRAPHIQUE (CHARGES DE TRAVAIL)
+function renderCharts() {
+  const labels = plan.map(w => w.label);
+  
+  const trimpPlannedData = [];
+  const trimpRealizedData = [];
+  const volPlannedData = [];
+  const volRealizedData = [];
+  
+  plan.forEach((w, idx) => {
+    const t = getWeekTRIMPs(idx);
+    trimpPlannedData.push(t.planned);
+    trimpRealizedData.push(t.realized);
+    
+    // Convertir volumes en heures décimales
+    let pMin = 0;
+    w.days.forEach(d => pMin += (d.pDur || 0));
+    volPlannedData.push((pMin / 60).toFixed(1));
+    
+    let rMin = 0;
+    w.days.forEach((d, dIdx) => {
+      const log = userLogs[getLogKey(idx, dIdx)];
+      if(log && log.done) rMin += (log.dur || 0);
+    });
+    volRealizedData.push((rMin / 60).toFixed(1));
+  });
+
+  // Graphique TRIMP
+  const ctxTrimp = document.getElementById("chart-trimp").getContext("2d");
+  if (chartTrimpInstance) chartTrimpInstance.destroy();
+  chartTrimpInstance = new Chart(ctxTrimp, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'TRIMP Prévu', data: trimpPlannedData, backgroundColor: 'rgba(148, 163, 184, 0.5)' },
+        { label: 'TRIMP Réalisé', data: trimpRealizedData, backgroundColor: '#7c3aed' }
+      ]
+    },
+    options: { responsive: true, plugins: { title: { display: true, text: 'Charge Cardiaque (TRIMP) par Semaine' } } }
+  });
+
+  // Graphique Volume horaire
+  const ctxVol = document.getElementById("chart-volume").getContext("2d");
+  if (chartVolumeInstance) chartVolumeInstance.destroy();
+  chartVolumeInstance = new Chart(ctxVol, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Volume Prévu (h)', data: volPlannedData, borderColor: '#cbd5e1', tension: 0.2, fill: false },
+        { label: 'Volume Réalisé (h)', data: volRealizedData, borderColor: '#2563eb', tension: 0.2, fill: false }
+      ]
+    },
+    options: { responsive: true, plugins: { title: { display: true, text: 'Volume Horaire (Heures) par Semaine' } } }
+  });
+}
+
+// ONGLET 4 : EXPORT & IMPORT DE SÉCURITÉ
+function exportData() {
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ logs: userLogs, plan: plan }));
+  const downloadAnchor = document.createElement('a');
+  downloadAnchor.setAttribute("href", dataStr);
+  downloadAnchor.setAttribute("download", `mcc_training_backup_${new Date().toISOString().slice(0,10)}.json`);
+  document.body.appendChild(downloadAnchor);
+  downloadAnchor.click();
+  downloadAnchor.remove();
+}
+
+function triggerImport() {
+  document.getElementById("import-file").click();
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      if (parsed.logs) userLogs = parsed.logs;
+      if (parsed.plan) plan = parsed.plan;
+      saveState();
+      renderAll();
+      alert("✅ Données d'entraînement synchronisées avec succès !");
+    } catch (err) {
+      alert("❌ Fichier invalide.");
+    }
+  };
+  reader.readAsText(file);
+}
+
+function resetAllData() {
+  if (confirm("⚠️ Êtes-vous sûr de vouloir réinitialiser l'application ? Tout votre historique sera effacé.")) {
+    localStorage.clear();
+    userLogs = {};
+    plan = JSON.parse(JSON.stringify(PLAN_DATA));
+    renderAll();
+  }
+}
+
+// INITIALISATION AU CHARGEMENT DE LA PAGE
+window.onload = () => {
+  loadState();
+  renderAll();
+};
+</script>
+
+</body>
+</html>
